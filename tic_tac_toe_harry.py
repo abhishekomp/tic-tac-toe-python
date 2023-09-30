@@ -57,14 +57,23 @@ if __name__ == '__main__':
   xState = [0, 0, 0, 0, 0, 0, 0, 0, 0]
   zState = [0, 0, 0, 0, 0, 0, 0, 0, 0]
   print(f"\nWelcome to Tic Tac Toe game:")
+  playerOneName = input("Enter 1st player name: ")
+  playerTwoName = input("Enter 2nd player name: ")
+  player_dict = {"0": playerOneName, "1": playerTwoName}
+  #print(player_dict)
   turn = 1 # 1 for X and 0 for O
   printboard(xState, zState)
   while True:
-    print(f"Entered in the while loop")
+    #print(f"Entered in the while loop")
     hasPlayedMadeMove = False
     if turn == 1 and hasPlayedMadeMove == False:
       print("X's turn:")
-      play_spot = int(input("Enter a number from 0 to 8: "))
+      print("{}'s turn".format(player_dict["0"]))
+      try:
+        play_spot = int(input("Enter a number from 0 to 8: "))
+      except ValueError:
+        print(f"Enter a valid value (0-8)")
+        continue
       if not isSpotInRange(play_spot):
         print(f"Enter valid number (0 - 8). Try again")
         continue
@@ -77,7 +86,13 @@ if __name__ == '__main__':
         hasPlayedMadeMove = False
     else:
       print("O's turn:")
+      print("{}'s turn".format(player_dict["1"]))
       play_spot = int(input("Enter a number from 0 to 8: "))
+      try:
+        play_spot = int(input("Enter a number from 0 to 8: "))
+      except ValueError:
+        print(f"Enter a valid value (0-8)")
+        continue
       if not isSpotInRange(play_spot):
         print(f"Enter valid number (0 - 8). Try again")
         continue
@@ -91,9 +106,14 @@ if __name__ == '__main__':
     printboard(xState, zState)
     if hasPlayedMadeMove:
       checkWin = checkForWin(xState, zState)
-      print(f"checkwin: {checkWin}")
-      if(checkWin != -1):
-        #printboard(xState, zState)
+      #print(f"checkwin: {checkWin}")
+      # if(checkWin != -1):
+      #   #printboard(xState, zState)
+      #   break
+      if checkWin in range(2):
+        print("{} won the game".format(player_dict[str(1 - checkWin)]))
+        break
+      elif checkWin == -2:
         break
     turn = 1 - turn
 
