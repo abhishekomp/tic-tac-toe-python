@@ -47,6 +47,12 @@ def isSpotFree(play_spot, xState, zState):
     return False
   return True
 
+def isSpotInRange(spotInt):
+  """
+  Player needs to enter a spot in the range 0 till 8
+  """
+  return 0 <= spotInt <= 8
+
 if __name__ == '__main__':
   xState = [0, 0, 0, 0, 0, 0, 0, 0, 0]
   zState = [0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -54,10 +60,14 @@ if __name__ == '__main__':
   turn = 1 # 1 for X and 0 for O
   printboard(xState, zState)
   while True:
+    print(f"Entered in the while loop")
     hasPlayedMadeMove = False
     if turn == 1 and hasPlayedMadeMove == False:
       print("X's turn:")
       play_spot = int(input("Enter a number from 0 to 8: "))
+      if not isSpotInRange(play_spot):
+        print(f"Enter valid number (0 - 8). Try again")
+        continue
       if isSpotFree(play_spot, xState, zState):
         xState[play_spot] = 1
         hasPlayedMadeMove = True
@@ -68,6 +78,9 @@ if __name__ == '__main__':
     else:
       print("O's turn:")
       play_spot = int(input("Enter a number from 0 to 8: "))
+      if not isSpotInRange(play_spot):
+        print(f"Enter valid number (0 - 8). Try again")
+        continue
       if isSpotFree(play_spot, xState, zState):
         zState[play_spot] = 1
         hasPlayedMadeMove = True
@@ -78,7 +91,7 @@ if __name__ == '__main__':
     printboard(xState, zState)
     if hasPlayedMadeMove:
       checkWin = checkForWin(xState, zState)
-      #print(f"checkwin: {checkWin}")
+      print(f"checkwin: {checkWin}")
       if(checkWin != -1):
         #printboard(xState, zState)
         break
