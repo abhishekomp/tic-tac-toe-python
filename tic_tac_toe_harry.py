@@ -24,6 +24,7 @@ def printboard(xState, zState):
   print(f"{six} | {seven} | {eight} ")
 
 def checkForWin(xState, zState):
+  #print(f"checkForWin invoked")
   wins = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
   for win in wins:
     if(sum(xState[win[0]], xState[win[1]], xState[win[2]])) == 3:
@@ -37,6 +38,15 @@ def checkForWin(xState, zState):
     return -2
   return -1
 
+def isSpotFree(play_spot, xState, zState):
+  """
+  Given a spot where the user wants to play (place X or O), it checks if this spot is already occupied by previous move played during the game
+  Returns True if the spot is free else False
+  """
+  if xState[play_spot] == 1 or zState[play_spot] == 1:
+    return False
+  return True
+
 if __name__ == '__main__':
   xState = [0, 0, 0, 0, 0, 0, 0, 0, 0]
   zState = [0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -44,20 +54,33 @@ if __name__ == '__main__':
   turn = 1 # 1 for X and 0 for O
   printboard(xState, zState)
   while True:
-    #print("\n")
-    if turn == 1:
+    hasPlayedMadeMove = False
+    if turn == 1 and hasPlayedMadeMove == False:
       print("X's turn:")
       play_spot = int(input("Enter a number from 0 to 8: "))
-      xState[play_spot] = 1
+      if isSpotFree(play_spot, xState, zState):
+        xState[play_spot] = 1
+        hasPlayedMadeMove = True
+      else:
+        print(f"The spot is already occupied. Try again")
+        turn = 0
+        hasPlayedMadeMove = False
     else:
       print("O's turn:")
       play_spot = int(input("Enter a number from 0 to 8: "))
-      zState[play_spot] = 1
+      if isSpotFree(play_spot, xState, zState):
+        zState[play_spot] = 1
+        hasPlayedMadeMove = True
+      else:
+        print(f"The spot is already occupied. Try again")
+        turn = 1
+        hasPlayedMadeMove = False
     printboard(xState, zState)
-    checkWin = checkForWin(xState, zState)
-    print(f"checkwin: {checkWin}")
-    if(checkWin != -1):
-      #printboard(xState, zState)
-      break
+    if hasPlayedMadeMove:
+      checkWin = checkForWin(xState, zState)
+      #print(f"checkwin: {checkWin}")
+      if(checkWin != -1):
+        #printboard(xState, zState)
+        break
     turn = 1 - turn
 
