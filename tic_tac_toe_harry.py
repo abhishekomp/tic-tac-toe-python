@@ -28,10 +28,10 @@ def checkForWin(xState, zState):
   wins = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
   for win in wins:
     if(sum(xState[win[0]], xState[win[1]], xState[win[2]])) == 3:
-      print(f"X won the game")
+      #print(f"X won the game")
       return 1
     if(sum(zState[win[0]], zState[win[1]], zState[win[2]])) == 3:
-      print(f"O won the game")
+      #print(f"O won the game")
       return 0
   if(sum(xState.count(1), zState.count(1), 0) == 9):
     print("Game ended in a tie")
@@ -67,8 +67,8 @@ if __name__ == '__main__':
     #print(f"Entered in the while loop")
     hasPlayedMadeMove = False
     if turn == 1 and hasPlayedMadeMove == False:
-      print("X's turn:")
-      print("{}'s turn".format(player_dict["0"]))
+      #print("X's turn:")
+      print("{}'s turn. Your symbol is X".format(player_dict["0"]))
       try:
         play_spot = int(input("Enter a number from 0 to 8: "))
       except ValueError:
@@ -85,9 +85,8 @@ if __name__ == '__main__':
         turn = 0
         hasPlayedMadeMove = False
     else:
-      print("O's turn:")
-      print("{}'s turn".format(player_dict["1"]))
-      play_spot = int(input("Enter a number from 0 to 8: "))
+      #print("O's turn:")
+      print("{}'s turn. Your symbol is O".format(player_dict["1"]))
       try:
         play_spot = int(input("Enter a number from 0 to 8: "))
       except ValueError:

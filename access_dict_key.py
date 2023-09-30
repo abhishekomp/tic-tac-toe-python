@@ -13,3 +13,4 @@ def checkForWin():
 checkWin = checkForWin()
 print(checkWin)
 print(f"{player_dict[str(checkWin)]} won")
+print("{}'s turn. Your name is {}".format(player_dict["0"], player_dict[str(checkWin)]))
